@@ -60,6 +60,32 @@ class App extends Component {
         })
     }
 
+    buttonSubmit = () => {
+        let { topText, finalMemeSelection, bottomText } = this.state
+        console.log(this.state.topText);
+        console.log(this.state.bottomText);
+        let URL = `https://ronreiter-meme-generator.p.mashape.com/meme?bottom=${bottomText}&meme=${finalMemeSelection}&top=${topText}`
+        console.log(URL)
+
+        var newHeaders = new Headers({
+            "X-Mashape-Key": "Kv52ZNI3zUmshd1hbHvG8kVRkkOjp1XX6kfjsn59Q3akJT6FJd"
+        });
+
+        let config = {
+            method: 'GET',
+            headers: newHeaders
+        }
+
+        fetch(URL, config)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log("There was an error");
+            console.log(error);
+        })
+    }
+
   render() {
      let memeNames = this.state.memeImageNames.map(memeName => {
          return (
