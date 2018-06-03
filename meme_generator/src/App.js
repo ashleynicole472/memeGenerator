@@ -5,12 +5,34 @@ import AUX from './hoc/AUX';
 class App extends Component {
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             topText: '',
-            bottomText: ''
+            bottomText: '',
+            memeImageNames: [
+              "Young-And-Reckless",
+              "Baron-Creater",
+              "Mad-Moxxi",
+              "2nd-Term-Obama",
+              "Unicorn-MAN",
+              "See-Nobody-Cares",
+              "Net-Noob",
+              "Jackie-Chan-WTF",
+              "Jersey-Santa",
+              "wallpaper",
+              "You-The-Real-MVP",
+              "Pepperidge-Farm-Remembers",
+              "Chocolate-Spongebob",
+              "Sarcastic-Anthony",
+              "Evil-Cows",
+              "Shouter",
+              "Drunk-Baby"
+          ],
+          finalMemeSelection: ''
         }
         this.topTextHandleChange = this.topTextHandleChange.bind(this);
         this.bottomTextHandleChange = this.bottomTextHandleChange.bind(this);
+        this.buttonSubmit = this.buttonSubmit.bind(this);
+        // this.memeNameHandleChange = this.memeNameHandleChange.bind(this);
     }
 
     topTextHandleChange = (event) => {
@@ -29,15 +51,29 @@ class App extends Component {
         })
     };
 
+    memeNameHandleChange = (event) => {
+        console.log(event);
+        console.log(event.target);
+        console.log(event.target.value);
+        this.setState({
+            finalMemeSelection: event.target.value
+        })
+    }
+
   render() {
+     let memeNames = this.state.memeImageNames.map(memeName => {
+         return (
+             <option value={memeName}>{memeName}</option>
+         )
+     })
     return (
         <AUX>
             <h1>Genorate your own meme!</h1>
             <h5>How it works:</h5>
             <ol>
-              <li>Type something for the top of the meme</li>
-              <li>Pick an image from the drop down menu</li>
-              <li>Type something for the bottom of the meme</li>
+                <li>Type something for the top of the meme</li>
+                <li>Pick an image from the drop down menu</li>
+                <li>Type something for the bottom of the meme</li>
             </ol>
             <div>
                 <div className="input-group input-group-lg">
@@ -50,7 +86,7 @@ class App extends Component {
                         className="form-control"
                         aria-label="Large"
                         aria-describedby="inputGroup-sizing-sm"
-                        value={this.state.topText}/>
+                        value={this.state.topText} />
                 </div>
             </div>
             <br />
@@ -60,10 +96,12 @@ class App extends Component {
                 </div>
                 <select
                     className="custom-select"
-                    id="inputGroupSelect01">
+                    id="inputGroupSelect01"
+                    onChange={this.memeNameHandleChange}>
+
                     <option selected>Choose...</option>
-                    <option value="1">one</option>
-                    <option value="2">two</option>
+                        {memeNames}
+
                 </select>
             </div>
             <div>
@@ -82,6 +120,7 @@ class App extends Component {
                 <br />
                 <button
                     type="button"
+                    onClick={this.buttonSubmit}
                     className="btn btn-secondary btn-lg btn-block">Genorate Your Meme!!</button>
             </div>
         </AUX>
