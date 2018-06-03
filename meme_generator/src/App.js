@@ -27,7 +27,9 @@ class App extends Component {
               "Shouter",
               "Drunk-Baby"
           ],
-          finalMemeSelection: ''
+          finalMemeSelection: '',
+          imgSrc: '',
+          isDownloaded: false
         }
         this.topTextHandleChange = this.topTextHandleChange.bind(this);
         this.bottomTextHandleChange = this.bottomTextHandleChange.bind(this);
@@ -61,6 +63,7 @@ class App extends Component {
     }
 
     buttonSubmit = () => {
+        this.setState({isDownloaded: false});
         let { topText, finalMemeSelection, bottomText } = this.state
         console.log(this.state.topText);
         console.log(this.state.bottomText);
@@ -78,12 +81,26 @@ class App extends Component {
 
         fetch(URL, config)
         .then((response) => {
-            console.log(response);
+          response.arrayBuffer()
+        .then((buffer) => {
+            var base64Flag = 'data:image/jpeg;base64,';
+            var imageStr = arrayBufferToBase64(buffer);
+
+            this.setState({
+                imgSrc: base64Flag + imageStr,
+                isDownloaded: true
+            })
+          })
         })
-        .catch((error) => {
-            console.log("There was an error");
-            console.log(error);
-        })
+
+        function arrayBufferToBase64(buffer) {
+          var binary = '';
+          var bytes = [].slice.call(new Uint8Array(buffer));
+
+          bytes.forEach((b) => binary += String.fromCharCode(b));
+
+          return window.btoa(binary);
+        };
     }
 
   render() {
@@ -149,6 +166,9 @@ class App extends Component {
                     onClick={this.buttonSubmit}
                     className="btn btn-secondary btn-lg btn-block">Genorate Your Meme!!</button>
             </div>
+            <br />
+            {this.state.isDownloaded ? <img src={this.state.imgSrc} alt={this.state.finalMemeSelection}/> : null}
+
         </AUX>
     );
   }
