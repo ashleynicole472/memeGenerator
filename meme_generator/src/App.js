@@ -103,12 +103,12 @@ class App extends Component {
         };
     }
 
-  render() {
-     let memeNames = this.state.memeImageNames.map(memeName => {
-         return (
-             <option value={memeName}>{memeName}</option>
-         )
-     })
+render() {
+    let memeNames = this.state.memeImageNames.map(memeName => {
+        return (
+            <option value={memeName}>{memeName}</option>
+        )
+    })
     return (
         <AUX>
             <h1>Genorate your own meme!</h1>
@@ -168,7 +168,6 @@ class App extends Component {
             </div>
             <br />
             {this.state.isDownloaded ? <img src={this.state.imgSrc} alt={this.state.finalMemeSelection}/> : null}
-
         </AUX>
     );
   }
